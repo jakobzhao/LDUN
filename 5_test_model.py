@@ -9,22 +9,34 @@
 
 from gensim.models import Word2Vec
 
+from tika import parser
+import os
+import sys
+from pymongo import MongoClient, errors
 
-model = Word2Vec.load("all_1202.w2v")
+# update the encoding system
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+
+model = Word2Vec.load("all_phrases_1202.w2v")
 
 # print model.similarity('global', 'world')
 # print model.similarity('climate', 'climatic')
 # print model.similarity('insurance', 'climate')
 # print model.similarity('have', 'we')
 
+
+# print model.most_similar('climate change')
+
 print "model.most_similar('insurance')"
-print model.most_similar('insurance', topn=40)
+print model.most_similar('insurance')
 
-print "model.most_similar('reinsurance')"
-print model.most_similar('reinsurance', topn=40)
-
-print "model.most_similar('re')"
-print model.most_similar('re', topn=30)
+# print "model.most_similar('reinsurance')"
+# print model.most_similar('reinsurance')
+#
+# print "model.most_similar('re')"
+# print model.most_similar('re', topn=30)
 
 print "model.most_similar('risk')"
 print model.most_similar('risk')
@@ -48,3 +60,6 @@ print model.most_similar('climate')
 
 print "model.most_similar('finance')"
 print model.most_similar('finance')
+
+
+

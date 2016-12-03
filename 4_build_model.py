@@ -10,7 +10,7 @@
 
 import sys
 from pymongo import MongoClient
-from gensim.models import Word2Vec
+from gensim.models import Word2Vec, Phrases
 
 # update the encoding system
 reload(sys)
@@ -32,6 +32,23 @@ for doc in docs:
     sentences = doc[u'sentences']
     all_sentences += sentences
 
+bigram_transformer = Phrases(all_sentences)
+
+# print list(bigram_transformer[all_sentences])
+
+
+
+###########################################################################
+# a = open("phrase.csv", "w")
+# frequency = bigram_transformer.vocab
+# for item in sorted(frequency, key=frequency.__getitem__, reverse=True):
+#     text = "%s,%d\n" % (item, frequency[item])
+#     a.write(text)
+# print "completed!"
+# exit(0)
+#############################################################################
+
+# model = Word2Vec(bigram_transformer[all_sentences], size=100, window=10, min_count=5, workers=16)
 model = Word2Vec(all_sentences, size=100, window=10, min_count=5, workers=16)
-model.save("all_1202.w2v")
+model.save("all_words_1202.w2v")
 print "completed!"

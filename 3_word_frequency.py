@@ -72,6 +72,9 @@ def review_to_sentences(review, tokenizer, remove_stopwords=False):
 client = MongoClient("localhost", 27017)
 db = client["undocs"]
 
+from nltk.corpus import stopwords
+stopwords = nltk.corpus.stopwords.words('english')
+
 search_json = {}
 docs = db.docs.find(search_json)
 count = docs.count()
@@ -84,26 +87,18 @@ for doc in docs:
     sentences = doc[u'sentences']
     for sentence in sentences:
         for word in sentence:
-            if word != u"none":
+            if word != u"none" and word not in stopwords:
                 count = frequency.get(word, 0)
                 frequency[word] = count + 1
 frequency_list = frequency.keys()
 # for words in frequency_list:
 #     print words, frequency[words]
 
-a = open("text.txt", "w")
+a = open("words.csv", "w")
 
 for item in sorted(frequency, key=frequency.__getitem__, reverse=True):
     text = "%s,%d\n" % (item, frequency[item])
     a.write(text)
 print "completed!"
-
-
-
-
-# sentences = review_to_sentences(total, tokenizer)
-#
-# model = Word2Vec(sentences, size=100, window=5, min_count=5, workers=16)
-# model.save("a-1201.w2v")
 
 

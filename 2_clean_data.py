@@ -18,7 +18,7 @@ import re
 from nltk.corpus import stopwords
 
 
-def review_to_wordlist(review, remove_stopwords=False):
+def review_to_wordlist(review, remove_stopwords=True):
     # Function to convert a document to a sequence of words,
     # optionally removing stop words.  Returns a list of words.
     #
@@ -47,7 +47,7 @@ tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 
 # Define a function to split a review into parsed sentences
-def review_to_sentences(review, tokenizer, remove_stopwords=False):
+def review_to_sentences(review, tokenizer, remove_stopwords=True):
     # Function to split a review into parsed sentences. Returns a
     # list of sentences, where each sentence is a list of words
     #
@@ -88,13 +88,3 @@ for doc in docs:
     except:
         print "error"
         pass
-
-
-
-
-# sentences = review_to_sentences(total, tokenizer)
-#
-# model = Word2Vec(sentences, size=100, window=5, min_count=5, workers=16)
-# model.save("a-1201.w2v")
-
-
