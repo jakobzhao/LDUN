@@ -11,7 +11,6 @@
 from tika import parser
 import os
 import sys
-# from gensim.models import Word2Vec
 from pymongo import MongoClient, errors
 
 # update the encoding system
@@ -29,14 +28,16 @@ for root, dirs, files in list_dirs:
         # print os.path.join(root, f)
         filenames.append(os.path.join(root, f))
 
-# processing the names
-content, tier, year, num = "", 0, 0, 0
+
 
 
 client = MongoClient("localhost", 27017)
 db = client["undocs"]
 
 for filename in filenames:
+    # processing the names
+    content, tier, year, num = "", 0, 0, 0
+
     if filename[-3:] == "pdf":
         # content
         text = parser.from_file(filename)['content']
@@ -48,8 +49,8 @@ for filename in filenames:
         # Tier 1
         if u"Tier_1" in filename:
             tier = 1
-            tags_string = filename.split("\\")[-2]
-            tags = tags_string.split("_")
+            tags_string = filename.split(u"\\")[-2]
+            tags = tags_string.split(u"_")
             year = tags[0]
             type = tags[1]
             if len(tags) == 3:
@@ -59,16 +60,16 @@ for filename in filenames:
         # Tier 2
         elif u"Tier_2" in filename:
             tier = 2
-            tags_string = filename.split("\\")[-2]
-            tags = tags_string.split("_")
+            tags_string = filename.split(u"\\")[-2]
+            tags = tags_string.split(u"_")
             year = tags[0]
             type = tags[1]
             num = float(tags[2])
         # Tier 3
-        else:
+        elif u"Tier_3" in filename:
             tier = 3
-            tags_string = filename.split("\\")[-2]
-            tags = tags_string.split("_")
+            tags_string = filename.split(u"\\")[-2]
+            tags = tags_string.split(u"_")
             year = tags[0]
             type = tags[1]
             num = float(tags[2])
@@ -77,8 +78,9 @@ for filename in filenames:
             'tier':     tier,
             'year':     year,
             'num':      num,
-            'filepath': root,
-            'filename':  filename.split("\\")[-1],
+            'type':     type,
+            'filepath': filename,
+            'filename': filename.split(u"\\")[-1],
             'content':  content,
         }
         print item_json
