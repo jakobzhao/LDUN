@@ -18,13 +18,13 @@ model = Word2Vec.load("all_1202.w2v")
 # print model.similarity('have', 'we')
 
 print "model.most_similar('insurance')"
-print model.most_similar('insurance', topn=20)
+print model.most_similar('insurance', topn=40)
+
+print "model.most_similar('reinsurance')"
+print model.most_similar('reinsurance', topn=40)
 
 print "model.most_similar('re')"
 print model.most_similar('re', topn=30)
-
-print "model.most_similar('reinsurance')"
-print model.most_similar('reinsurance', topn=20)
 
 print "model.most_similar('risk')"
 print model.most_similar('risk')
