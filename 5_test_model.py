@@ -20,8 +20,11 @@ sys.setdefaultencoding('utf-8')
 
 
 model = Word2Vec.load("all_phrases_1202.w2v")
+# model = Word2Vec.load("all_words_1202.w2v")
 
-# print model.similarity('global', 'world')
+print model.similarity('damage', 'compensation')
+print model.similarity('loss', 'compensation')
+print model.similarity('insurance', 'compensation')
 # print model.similarity('climate', 'climatic')
 # print model.similarity('insurance', 'climate')
 # print model.similarity('have', 'we')
@@ -29,11 +32,29 @@ model = Word2Vec.load("all_phrases_1202.w2v")
 
 # print model.most_similar('climate change')
 
+print "model.most_similar('resilience')"
+print model.most_similar('resilience', topn=20)
+
+print "model.most_similar('viable')"
+print model.most_similar('viable', topn=20)
+
+print "model.most_similar('cooke')"
+print model.most_similar('cooke', topn=20)
+
+print "model.most_similar('munich')"
+print model.most_similar('munich')
+
+print "model.most_similar('swiss')"
+print model.most_similar('swiss')
+
 print "model.most_similar('insurance')"
 print model.most_similar('insurance')
 
-# print "model.most_similar('reinsurance')"
-# print model.most_similar('reinsurance')
+print "model.most_similar('reinsurance')"
+print model.most_similar('reinsurance')
+
+print "model.most_similar('compensation')"
+print model.most_similar('compensation', topn=20)
 #
 # print "model.most_similar('re')"
 # print model.most_similar('re', topn=30)

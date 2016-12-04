@@ -8,17 +8,23 @@
 # @organization: College of Earth, Ocean, and Atmospheric Sciences, Oregon State University
 
 
-from tika import parser
-import os
-import sys
-# from gensim.models import Word2Vec
-from pymongo import MongoClient, errors
+from pymongo import MongoClient
 from bs4 import BeautifulSoup
 import re
 from nltk.corpus import stopwords
+# Download the punkt tokenizer for sentence splitting
+import nltk.data
+
+# Load the punkt tokenizer
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+# Download the punkt tokenizer for sentence splitting
+import nltk.data
+
+# Load the punkt tokenizer
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 
-def review_to_wordlist(review, remove_stopwords=True):
+def review_to_wordlist(review, remove_stopwords=False):
     # Function to convert a document to a sequence of words,
     # optionally removing stop words.  Returns a list of words.
     #
@@ -39,15 +45,9 @@ def review_to_wordlist(review, remove_stopwords=True):
     # 5. Return a list of words
     return(words)
 
-# Download the punkt tokenizer for sentence splitting
-import nltk.data
-
-# Load the punkt tokenizer
-tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-
 
 # Define a function to split a review into parsed sentences
-def review_to_sentences(review, tokenizer, remove_stopwords=True):
+def review_to_sentences(review, tokenizer, remove_stopwords=False):
     # Function to split a review into parsed sentences. Returns a
     # list of sentences, where each sentence is a list of words
     #
@@ -61,7 +61,7 @@ def review_to_sentences(review, tokenizer, remove_stopwords=True):
         if len(raw_sentence) > 0:
             # Otherwise, call review_to_wordlist to get a list of words
             new_sentence = review_to_wordlist(raw_sentence, remove_stopwords)
-            if new_sentence != []:
+            if new_sentence != [] and new_sentence != [u'none']:
                 sentences.append(new_sentence)
     #
     # Return the list of sentences (each sentence is a list of words,
@@ -83,7 +83,7 @@ for doc in docs:
     sentences = review_to_sentences(content, tokenizer)
     print sentences
     try:
-        db.docs.update({'_id': doc[u'_id']}, {'$set': {'sentences': sentences}})
+        db.docs.update({'_id': doc[u'_id']}, {'$set': {'sentences_keep_swords': sentences}})
         print "========================"
     except:
         print "error"
