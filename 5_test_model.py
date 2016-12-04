@@ -19,10 +19,11 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-model = Word2Vec.load("all_phrases_1202.w2v")
+# model = Word2Vec.load("all_phrases_1202.w2v")
+model = Word2Vec.load("model/words/words_year_2016_1203.w2v")
 # model = Word2Vec.load("all_words_1202.w2v")
 
-print model.similarity('damage', 'compensation')
+print model.similarity('damage', 'climate')
 print model.similarity('loss', 'compensation')
 print model.similarity('insurance', 'compensation')
 # print model.similarity('climate', 'climatic')

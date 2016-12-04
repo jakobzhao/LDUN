@@ -29,10 +29,10 @@ for year in range(1995, 2017):
     for doc in docs:
         i += 1
         print i
-        sentences = doc[u'sentences']
+        sentences = doc[u'sentences_keep_swords']
         all_sentences += sentences
 
-    model = Word2Vec(all_sentences, size=100, window=10, min_count=5, workers=16)
+    model = Word2Vec(all_sentences, size=100, window=10, min_count=1, workers=16)
     model.save("model/phrases/phrases_year_%s_1203.w2v" % year)
     print "Year %s completed!" % year
 print "completed!"
